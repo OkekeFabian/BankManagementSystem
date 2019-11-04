@@ -11,7 +11,7 @@ import javax.persistence.Persistence;
 /**
  *In charge of the connections needed for anything to be done to the database
  * @author fabianokeke
- * version 1.o
+ * @version 1.o
  */
 public class ConnectionHolder {
      /**
@@ -31,14 +31,25 @@ public class ConnectionHolder {
      */
     private static final String DEFAULT_PU = "LabPU";
     
-    
+    /**
+     * constructor of connection Holder
+     */
     private ConnectionHolder (){
     }
     
+    /**
+     * Getting the Instance initiated by the connection Holder
+     * @return the instance
+     */
     public static ConnectionHolder getInstance(){
         return instance;
     }
     
+    /**
+     * To get the entity manager initiated
+     * @return the entity manager gotten
+     */
+   
     public EntityManager getEntityManager(){
         if (entityManager == null) {
             if (persistenceUnitName == null) {
@@ -49,6 +60,9 @@ public class ConnectionHolder {
         return entityManager;
     }
     
+    /**
+     * To close the entity manager
+     */
     public void closeEntityManager(){
         if (entityManager != null) {
             entityManager.close();
@@ -56,7 +70,7 @@ public class ConnectionHolder {
         }
     }
     /**
-     * 
+     * To set the persistence name of the project
      * @param persistenceUnitName the persistence name of the project
      */
     public void setPersistenceUnitName(String persistenceUnitName) {
