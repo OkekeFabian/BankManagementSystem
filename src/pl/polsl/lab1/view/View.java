@@ -5,11 +5,9 @@
  */
 package pl.polsl.lab1.view;
 
-import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import pl.polsl.lab1.model.Bank;
-import pl.polsl.lab1.model.BankDAO;
 import pl.polsl.lab1.model.Customer;
 import pl.polsl.lab1.model.Location;
 
@@ -25,19 +23,19 @@ public class View {
      */
     public void nextTransaction() {
         System.out.println ( "***************************" );
-        System.out.println ( "Please enter a number from 1 to 5 to proceed to a transaction" );
+        System.out.println ( "Please enter a number from 1 to 12 to proceed to a transaction" );
     }
 
     /**
      * Options available for the user to select
      */
     public void options() {
-        System.out.println ( "Main Menu\n 1.Add a Bank \n 2.Add a customer \n 3.update bank\n 4.update Customer\n 5.Delete a bank.\n 6.delete a customer"
-                + "\n 7.Display Banks \n 8.Display Customers \n 9. Query Bank Table \n 10.Query Customer Table \n 11.Query Bank table using Bank name or iD \n 12.Query Customer Table by providind customer first name or Bank Id" );
+        System.out.println ( "Main Menu\n 1.Add a Bank \n 2.Add a customer \n 3.Update bank\n 4.Update Customer\n 5.Delete a bank.\n 6.Delete a customer"
+                + "\n 7.Display Banks \n 8.Display Customers \n 9.Query Bank Table \n 10.Query Customer Table \n 11.Query Bank table using Bank name or iD \n 12.Query Customer Table by providing customer first name or Bank Id" );
         nextTransaction ();
     }
 /**
- * 
+ * To read Integer
  * @return integer entered by the user
  */
     public int readInt() {

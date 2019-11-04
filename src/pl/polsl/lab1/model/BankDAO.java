@@ -13,44 +13,38 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Path;
+
 import javax.persistence.criteria.Root;
 
-
-import pl.polsl.lab1.view.View;
-
 /**
- * BankDAO class responsible for changes or transactions done in or to the bank class
+ * BankDAO class responsible for changes or transactions done in or to the bank
+ * class
+ *
  * @author fabianokeke
  * @version 1.0
- * 
+ *
  */
-
 public class BankDAO extends AbstractDAO<Bank> {
 
-    private View view;
-    private Path<Object> expression;
-
-    public BankDAO() {
-        view = new View();
-    }
-/**
- * 
- * @param name:Finding a bank by using the name inputted by the user
- * @return the bank(s) found after the search 
- */
-  
+    /**
+     * Finding Bank by providing name
+     *
+     * @param name:Finding a bank by using the name inputted by the user
+     * @return the bank(s) found after the search
+     */
     @Override
     public List<Bank> find(String name) {
         return connectionHolder.getEntityManager().createNamedQuery("Bank.findByName")
                 .setParameter("name", name).getResultList();
     }
-/**
- * 
- * @param id:Finding bank by the id provided by the user
- * @return the bank(s) found after the search
- */
-  
+
+    /**
+     * Finding Bank by providing ID
+     *
+     * @param id:Finding bank by the id provided by the user
+     * @return the bank(s) found after the search
+     */
+
     public Bank findByBankId(Integer id) {
         connectionHolder.getEntityManager().clear();
 
@@ -59,7 +53,8 @@ public class BankDAO extends AbstractDAO<Bank> {
     }
 
     /**
-     * 
+     * To see the list of Banks in the database
+     *
      * @return the bank list before and after changes are made
      */
     public List<Bank> getBankList() {
@@ -69,24 +64,24 @@ public class BankDAO extends AbstractDAO<Bank> {
 
     /**
      * Overloaded constructor of getting list of banks
+     *
      * @param name: name of the bank that the user is trying to find
      * @param location:location of the bank that the user is trying to find
-     * @return  list of banks also when the user is trying to search and so has to provide name and location
- 
+     * @return list of banks also when the user is trying to search and so has
+     * to provide name and location
+     *
      */
-    
     public List<Bank> getBankList(String name, Location location) {
 
         return connectionHolder.getEntityManager().createQuery(getCriteriaQuery(name, location)).getResultList();
     }
-    
+
     /**
-     * 
+     * To delete a bank by providing id
+     *
      * @param id the user has to enter to delete the bank
      * @return true/false value if the transaction was concluded or not
      */
-    
-  
     public boolean delete(int id) {
         EntityManager em = connectionHolder.getEntityManager();
         Bank ba = findByBankId(id);
@@ -99,36 +94,41 @@ public class BankDAO extends AbstractDAO<Bank> {
             return false;
         }
     }
-    
+
     /**
-     *  
-     * @param id user providing id to be able to access and update the desired bank
+     * Updating bank by providing id and name
+     *
+     * @param id user providing id to be able to access and update the desired
+     * bank
      * @param name providing the name of the bank to be updated
      * @return true/false value if the transaction was concluded or not
-     * @throws Exception if bank doesn't exist 
+     * @throws Exception if bank doesn't exist
      */
-   
     public boolean updateBank(int id, String name)
             throws Exception {
         EntityManager em = connectionHolder.getEntityManager();
         Bank bank;
         bank = em.find(Bank.class, id);
-
-        bank.setName(name);
-        em.getTransaction().begin();
-        em.merge(bank);
-        em.getTransaction().commit();
-        return true;
-
+        if (bank != null) {
+            bank.setName(name);
+            em.getTransaction().begin();
+            em.merge(bank);
+            em.getTransaction().commit();
+            return true;
+        } else {
+            throw new Exception("No bank entry with id = " + id + " was found in the database");
+        }
     }
 
     /**
+     * Criteria query responsible for finding Bank after providing name and
+     * location
+     *
      * @param name providing the name of the bank to be queried
-     * @param location: user providing location to be able to access and query the desired bank
+     * @param location: user providing location to be able to access and query
+     * the desired bank
      * @return the bank found
      */
-    
-    
     private CriteriaQuery<Bank> getCriteriaQuery(String name, Location location) {
         Expression expr; // refers to the attributes of entity class
         Root<Bank> queryRoot; // entity/table from which the selection is performed

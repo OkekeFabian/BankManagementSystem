@@ -3,8 +3,6 @@ package pl.polsl.lab1;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -15,9 +13,9 @@ import pl.polsl.lab1.model.CustomerDAO;
 import pl.polsl.lab1.model.Location;
 import pl.polsl.lab1.view.View;
 
-
 /**
- * 
+ * In charge of holding transactions the user can choose and perform
+ *
  * @author fabianokeke
  * @version 1.0
  */
@@ -31,7 +29,6 @@ public class Main {
         BankDAO bankDAO = new BankDAO();
         CustomerDAO customerDAO = new CustomerDAO();
 
-   
         Main main = new Main();
         View view = new View();
         int command = 0;
@@ -68,69 +65,73 @@ public class Main {
                     case 3: {
 
                         view.displayMessage("Updating a Bank");
-
                         view.displayMessage("Please enter an id of the bank you want to update");
                         int id = view.readInt();
+
                         Bank bank = bankDAO.findByBankId(id);
+
                         if (bank != null) {
-
-                            view.displayMessage(bank.getName());
+                            view.displayMessage("Current first name - " + bank.getName());
                             view.displayMessage("\nEnter a new name: \n");
-
                             String newName = view.readString();
-
-                            if (newName.length() == 0) {
-                                newName = bank.getName();
+                            try {
+                                bankDAO.updateBank(id, newName);
+                            } catch (Exception ex) {
+                                view.displayMessage(ex.getMessage());
                             }
-
-                            if (bankDAO.updateBank(id, newName)) {
-                                view.displayMessage("SUccess");
-                            } else {
-                                view.displayMessage("E");
-                            }
-
                             view.displayMessage("Bank Updated");
                             view.displayMessage("******************************************************");
+                            break;
+                        } else {
+                            view.displayMessage("The bank doesnt exist, try again...");
                         }
                     }
+
                     break;
 
                     case 4: {
                         view.displayMessage("Updating a Customer");
+                        view.displayMessage("Enter the Id of the customer");
                         int id = view.readInt();
+
                         Customer customer = customerDAO.findCustomerById(id);
                         if (customer != null) {
+                            {
+                                view.displayMessage("Current first name - " + customer.getFirstName());
+                                view.displayMessage("\nEnter a new first name: \n");
+                                String newFirstName = view.readString();
 
-                            view.displayMessage("Current first name - " + customer.getFirstName());
-                            view.displayMessage("\nEnter a new first name: \n");
-                            String newFirstName = view.readString();
+                                view.displayMessage("Current last name - " + customer.getLastName());
+                                view.displayMessage("\nEnter a new last name: \n");
+                                String newLastName = view.readString();
 
-                            view.displayMessage("Current last name - " + customer.getLastName());
-                            view.displayMessage("\nEnter a new last name: \n");
-                            String newLastName = view.readString();
+                                view.displayMessage("Current bank id - " + customer.getBank());
+                                Bank bank = null;
+                                while (true) {
+                                    view.displayMessage("\nEnter a new bank id: \n");
+                                    int newBankId = view.readInt();
 
-                            view.displayMessage("Current bank id - " + customer.getBank());
-                            Bank bank = null;
-                            while (true) {
-                                view.displayMessage("\nEnter a new bank id: \n");
-                                int newBankId = view.readInt();
+                                    bank = bankDAO.findByBankId(newBankId);
+                                    if (bank != null) {
 
-                                bank = bankDAO.findByBankId(newBankId);
-                                if (bank != null) {
-                                    break;
-                                } else {
-                                    view.displayMessage("THe bank doesnt exist, try again...");
+                                        break;
+                                    } else {
+                                        view.displayMessage("The bank doesnt exist, try again...");
+                                    }
+                                }
+                                try {
+                                    customerDAO.update(id, newFirstName, newLastName, bank);
+                                    view.displayMessage("Customer Updated successfully");
+                                    view.displayMessage("******************************************************");
+                                } catch (Exception e) {
+                                    view.displayMessage(e.getMessage());
                                 }
                             }
-                            if (customerDAO.update(id, newFirstName, newLastName, bank)) {
-                                view.displayMessage("Updated successfully");
-                            } else {
-                                view.displayMessage("The customer with such id doesnt exist");
-                            }
-
-                            view.displayMessage("Customer Updated");
+                        } else {
+                            view.displayMessage("The customer doesnt exist, try again...");
                             view.displayMessage("******************************************************");
                         }
+
                     }
                     break;
 
@@ -148,6 +149,7 @@ public class Main {
                         view.displayMessage("******************************************************");
                     }
                     break;
+
                     case 6: {
                         view.displayMessage("Deleting Customer");
                         view.displayMessage("Enter an id of the customer you want to delete: ");
@@ -225,34 +227,34 @@ public class Main {
             } catch (InputMismatchException e) {
                 view.displayMessage("wrong input ,program is terminated");
                 command = 0;
-            } catch (Exception ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         } while (command != 0);
     }
 
     /**
      * Method for creating a new customer after accepting the ID
-     * @param view: object of View Class so as to be able to enter and also print out messages
+     *
+     * @param view: object of View Class so as to be able to enter and also
+     * print out messages
      * @return new customer that was created
      */
     public Customer createCustomer(View view) {
         Customer customer = new Customer();
         view.displayMessage("Enter Customer First Name: ");
         customer.setFirstName(view.readString());
-       view.displayMessage("Enter Customer Last Name: ");
+        view.displayMessage("Enter Customer Last Name: ");
         customer.setLastName(view.readString());
         customer.setBirthDate(new Date());
         BankDAO bd = new BankDAO();
         Bank bank = null;
         do {
-             view.displayMessage("What is the ID of the bank you want Customer to join ");
+            view.displayMessage("What is the ID of the bank you want Customer to join ");
             int bankId = view.readInt();
             bank = bd.find(Bank.class, bankId);
             if (bank != null) {
                 customer.setBank(bank);
 
-                 view.displayMessage(", bank= "
+                view.displayMessage(", bank= "
                         + bank.getName()
                         + "Customer{"
                         + "id="
@@ -272,5 +274,3 @@ public class Main {
     }
 
 }
-
-

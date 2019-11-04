@@ -6,27 +6,54 @@
 package pl.polsl.lab1.model;
 
 /**
- * 
+ * Holding the 4 main locations that banks created can be made in
+ *
  * @author fabianokeke
  * @version 1.0
- * Holding the 4 main locations that banks created can be made in
+ *
  */
-
 public enum Location {
-    GLIWICE(1,"Gliwice"), KATOWICE(2,"Katowice"), WARSAW(3,"Warsaw"), KRAKOW(4,"Krakow");
-    
-    private int id;
-    private String name;
-    Location(int id,String name) {
+    GLIWICE(1, "Gliwice"), KATOWICE(2, "Katowice"), WARSAW(3, "Warsaw"), KRAKOW(4, "Krakow");
+
+    /**
+     * Id's of the locations of the banks
+     */
+    private final int id;
+
+    /**
+     * name of the locations of the banks
+     */
+    private final String name;
+
+    /**
+     * Constructor of the Location enum
+     *
+     * @param id of the locations of the banks
+     * @param name of the locations of the banks
+     */
+    Location(int id, String name) {
         this.id = id;
         this.name = name;
     }
-    public String toString(){
+
+    /**
+     * Override of toString() method
+     *
+     * @return a composite String containing all the fields
+     */
+    @Override
+    public String toString() {
         return this.id + " - " + this.name;
     }
-    public static Location getLocationById(int id){
-        
-        switch(id){
+
+    /**
+     *
+     * @param id of the locations of banks
+     * @return the locations based on id provided
+     */
+    public static Location getLocationById(int id) {
+
+        switch (id) {
             case 1:
                 return Location.GLIWICE;
             case 2:
@@ -39,8 +66,13 @@ public enum Location {
                 return null;
         }
     }
-    public Integer getId(){
+
+    /**
+     * Getting the Id of location of the banks
+     *
+     * @return Id of the locations of the banks
+     */
+    public Integer getId() {
         return id;
     }
 }
-

@@ -15,18 +15,20 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import pl.polsl.lab1.view.View;
 
 /**
- * CustomerDAO class responsible for changes or transactions done in or to the customer class
+ * CustomerDAO class responsible for changes or transactions done in or to the
+ * customer class
+ *
  * @author fabianokeke
- * @version 1.0
- * CustomerDAO class responsible for changes or transactions done in or to the bank class
+ * @version 1.0 CustomerDAO class responsible for changes or transactions done
+ * in or to the bank class
  */
 public class CustomerDAO extends AbstractDAO<Customer> {
-    
-    View view = new View();
+
     /**
+     * Finding customers by providing name
+     *
      * @param name: Finding a customer by using the name inputted by the user
      * @return the customer found
      */
@@ -35,41 +37,45 @@ public class CustomerDAO extends AbstractDAO<Customer> {
         return connectionHolder.getEntityManager().createNamedQuery("Customer.findByName")
                 .setParameter("name", name).getResultList();
     }
-    
+
     /**
-     * To find the customer by providing
+     * To find the customer by providing id
+     *
      * @param id of the customer the user is trying to find
      * @return the customer found
      */
     public Customer findCustomerById(Integer id) {
         connectionHolder.getEntityManager().clear();
-        
+
         return (Customer) (connectionHolder.getEntityManager().find(Customer.class, id));
-        
+
     }
-   
+
     /**
-     * to get all the customers present in the database
+     * To get all the customers present in the database
+     *
      * @return all the customers present in the database
      */
     public List<Customer> getAllCustomers() {
         return connectionHolder.getEntityManager().createNamedQuery("Customer.getAll")
                 .getResultList();
     }
-    
+
     /**
-     * method to get the list of customers
+     * Method to get the list of customer giving the id and Bank
+     *
      * @param name of the customer
      * @param bank of the customer
-     * @return 
+     * @return
      */
     public List<Customer> getCustomerList(String name, Bank bank) {
-        
+
         return connectionHolder.getEntityManager().createQuery(getCriteriaQuery(name, bank)).getResultList();
     }
 
     /**
      * To delete customer
+     *
      * @param id of the customer to be deleted
      * @return true or false if the transaction was concluded or not
      */
@@ -85,33 +91,39 @@ public class CustomerDAO extends AbstractDAO<Customer> {
             return false;
         }
     }
-    
+
     /**
      * To update customers list
+     *
      * @param id of the customer to be updated
      * @param newFirstName of the customer to be updated
      * @param newLastName of the customer to be updated
      * @param bank of the customer to be updated
-     * @return 
+     * @return
+     * @throws java.lang.Exception
      */
-    public boolean update(int id, String newFirstName, String newLastName, Bank bank) {
+    public boolean update(int id, String newFirstName, String newLastName, Bank bank)
+            throws Exception {
         EntityManager em = connectionHolder.getEntityManager();
         Customer customer = em.find(Customer.class, id);
-        
-        customer.setFirstName(newFirstName);
-        customer.setLastName(newLastName);
-        customer.setBirthDate(new Date());
-        customer.setBank(bank);
-        em.getTransaction().begin();
-        em.merge(customer);
-        em.getTransaction().commit();
-        return true;
-        
+        if (customer != null) {
+            customer.setFirstName(newFirstName);
+            customer.setLastName(newLastName);
+            customer.setBirthDate(new Date());
+            customer.setBank(bank);
+            em.getTransaction().begin();
+            em.merge(customer);
+            em.getTransaction().commit();
+            return true;
+        } else {
+            throw new Exception("No customer with the information provided is available entry with id = " + id + " was found in the database");
+        }
     }
 
     /**
-     * To query the customer table
-     * @param customerName name of the customer 
+     * To query the customer table by providing customers name and the bank
+     *
+     * @param customerName name of the customer
      * @param bank of the customer to be queried
      * @return the found customer
      */
@@ -133,7 +145,7 @@ public class CustomerDAO extends AbstractDAO<Customer> {
             // creates condition of the form s.name LIKE name
             predicates.add(builder.like(expr, "%" + customerName + "%"));
         }
-        
+
         if (bank != null) {
             expr = queryRoot.get("bank");
             predicates.add(builder.equal(expr, bank));
@@ -144,7 +156,7 @@ public class CustomerDAO extends AbstractDAO<Customer> {
             queryDefinition.where(
                     builder.or(predicates.toArray(
                             new Predicate[predicates.size()])));
-            
+
         }
         return queryDefinition;
     }
