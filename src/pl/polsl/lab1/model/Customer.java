@@ -183,16 +183,16 @@ public class Customer implements Serializable {
     /**
      * customer's Bank getter
      *
-     * @return Employee's department
+     * @return customer's bank
      */
     public Bank getBank() {
         return bank;
     }
 
     /**
-     * Employee's Department setter
+     * customer's Bank setter
      *
-     * @param bank new bank
+     * @param bank new bank of customer
      */
     public void setBank(Bank bank) {
         this.bank = bank;

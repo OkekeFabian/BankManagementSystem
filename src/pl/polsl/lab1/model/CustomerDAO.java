@@ -17,12 +17,12 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 /**
- * CustomerDAO class responsible for changes or transactions done in or to the
- * customer class
+ * CustomerDAO class responsible for changes or transactions done in or to the customer class
+ * 
  *
  * @author fabianokeke
  * @version 1.0 
- * in or to the bank class
+ * 
  */
 public class CustomerDAO extends AbstractDAO<Customer> {
 

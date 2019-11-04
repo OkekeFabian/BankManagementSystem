@@ -64,14 +64,14 @@ public class Bank implements Serializable {
     /**
      * id getter
      *
-     * @return current id of the department
+     * @return current id of the Bank
      */
     public Integer getId() {
         return id;
     }
 
     /**
-     * Set an id of the department
+     * Set an id of the Bank
      *
      * @param id new id
      */
@@ -82,7 +82,7 @@ public class Bank implements Serializable {
     /**
      * name getter
      *
-     * @return current name of the department
+     * @return current name of the Bank
      */
     public String getName() {
         if (name != null) {
@@ -120,7 +120,7 @@ public class Bank implements Serializable {
     }
 
     /**
-     * Get all the customers of the department
+     * Get all the customers present
      *
      * @return a list of Customers
      */
@@ -129,7 +129,7 @@ public class Bank implements Serializable {
     }
 
     /**
-     * Set customers of the department
+     * Set customers present
      *
      * @param customers list of customers
      */

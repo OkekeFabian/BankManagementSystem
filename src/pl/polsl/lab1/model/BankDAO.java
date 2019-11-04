@@ -17,8 +17,8 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Root;
 
 /**
- * BankDAO class responsible for changes or transactions done in or to the bank
- * class
+ * BankDAO class responsible for changes or transactions done in or to the bank class
+ * 
  *
  * @author fabianokeke
  * @version 1.0
