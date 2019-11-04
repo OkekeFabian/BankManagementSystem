@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Bank entity
+ * Bank entity holding all fields needed to create a bank in the database
  *
  * @author fabianokeke
  * @version 1.0

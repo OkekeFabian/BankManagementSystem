@@ -121,8 +121,8 @@ public class BankDAO extends AbstractDAO<Bank> {
     }
 
     /**
-     * Criteria query responsible for finding Bank after providing name and
-     * location
+     * Criteria query responsible for finding Bank after providing name and location
+     * 
      *
      * @param name providing the name of the bank to be queried
      * @param location: user providing location to be able to access and query

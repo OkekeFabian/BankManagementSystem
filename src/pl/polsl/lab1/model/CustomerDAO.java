@@ -21,7 +21,7 @@ import javax.persistence.criteria.Root;
  * customer class
  *
  * @author fabianokeke
- * @version 1.0 CustomerDAO class responsible for changes or transactions done
+ * @version 1.0 
  * in or to the bank class
  */
 public class CustomerDAO extends AbstractDAO<Customer> {
@@ -64,8 +64,8 @@ public class CustomerDAO extends AbstractDAO<Customer> {
     /**
      * Method to get the list of customer giving the id and Bank
      *
-     * @param name of the customer
-     * @param bank of the customer
+     * @param name of the customer to get
+     * @param bank of the customer to get
      * @return
      */
     public List<Customer> getCustomerList(String name, Bank bank) {
@@ -96,9 +96,9 @@ public class CustomerDAO extends AbstractDAO<Customer> {
      * To update customers list
      *
      * @param id of the customer to be updated
-     * @param newFirstName of the customer to be updated
-     * @param newLastName of the customer to be updated
-     * @param bank of the customer to be updated
+     * @param newFirstName new first name of the customer to be updated
+     * @param newLastName new last name of the customer to be updated
+     * @param bank new bank of the customer to be updated
      * @return
      * @throws java.lang.Exception
      */
@@ -123,7 +123,7 @@ public class CustomerDAO extends AbstractDAO<Customer> {
     /**
      * To query the customer table by providing customers name and the bank
      *
-     * @param customerName name of the customer
+     * @param customerName name of the customer to be queried
      * @param bank of the customer to be queried
      * @return the found customer
      */

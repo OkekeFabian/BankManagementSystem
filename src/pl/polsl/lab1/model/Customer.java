@@ -18,7 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * Customer entity
+ * Customer entity holding all fields needed to create a customer in the database
  *
  * @author fabianokeke
  * @version 1.0

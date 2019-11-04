@@ -13,7 +13,24 @@ package pl.polsl.lab1.model;
  *
  */
 public enum Location {
-    GLIWICE(1, "Gliwice"), KATOWICE(2, "Katowice"), WARSAW(3, "Warsaw"), KRAKOW(4, "Krakow");
+    /**
+     * First Location to be chosen by the user
+     */
+    GLIWICE(1, "Gliwice"),
+    
+    /**
+     * Second Location to be chosen by the user
+     */
+    KATOWICE(2, "Katowice"),
+    /**
+     * Third Location to be chosen by the user
+     */
+    WARSAW(3, "Warsaw"),
+    
+    /**
+     * Fourth Location to be chosen by the user
+     */
+    KRAKOW(4, "Krakow");
 
     /**
      * Id's of the locations of the banks
@@ -26,7 +43,7 @@ public enum Location {
     private final String name;
 
     /**
-     * Constructor of the Location enum
+     * Constructor of the enumerated Location 
      *
      * @param id of the locations of the banks
      * @param name of the locations of the banks
@@ -47,7 +64,7 @@ public enum Location {
     }
 
     /**
-     *
+     *To get the location by providing the id
      * @param id of the locations of banks
      * @return the locations based on id provided
      */
